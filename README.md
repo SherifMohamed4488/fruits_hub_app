@@ -27,7 +27,9 @@
 - **Shared Preferences** — Local storage  
 - **REST API / Firestore** — Data fetching  
 - **Responsive UI** — Adapts to mobile/tablet  
-- **Clean Architecture** — Layered, maintainable code  
+- **Clean Architecture** — Layered, maintainable code
+- **PayPal** — Payment gateway integration  
+
 
 ---
 
