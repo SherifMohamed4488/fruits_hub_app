@@ -11,7 +11,7 @@ class BestSellingGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPadding(
-        padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 75.h),
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
 
         sliver: SliverGrid(
 
@@ -19,15 +19,15 @@ class BestSellingGridView extends StatelessWidget {
 
               childCount: products.length,
                   (context, index) {
-                return FruitItem(productEntity: getDummyOneProduct(),);
+                return FruitItem(productEntity: products[index]);
               }),
 
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
 
               crossAxisCount: 2,
               childAspectRatio: 0.77,
-              crossAxisSpacing: 10.w,
-              mainAxisSpacing: 10.h
+              crossAxisSpacing: 8.w,
+              mainAxisSpacing: 8.h
           ),
 
         )

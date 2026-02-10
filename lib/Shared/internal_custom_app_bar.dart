@@ -38,12 +38,12 @@ class InternalCustomAppBar extends StatelessWidget {
           ),
         ),
         
-        Visibility(child: Gap(arrowVisible ? 107.w : 132.w )),
+        Visibility(child: Gap(arrowVisible ? 66.w : 132.w )),
         // Spacer(),
 
         Text(
           text,
-          textAlign: TextAlign.center,
+          // textAlign: TextAlign.center,
           style: TextStyles.bold19.copyWith(color: const Color(0xFF0C0D0D))
         ),
 

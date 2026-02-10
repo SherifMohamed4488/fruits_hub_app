@@ -10,27 +10,24 @@ VoidCallback? onPressed;
 String text ;
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: 343.w,
-        height: 54.h,
-        padding:  EdgeInsets.symmetric(horizontal: 48.w, vertical: 15.h),
-    decoration: ShapeDecoration(
-    color: const Color(0xFF1B5E37) /* Green1-500 */,
-    shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(16.r),
-    )),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+          width: 343.w,
+          height: 57.h,
+          padding:  EdgeInsets.symmetric(horizontal: 48.w, vertical: 15.h),
+      decoration: ShapeDecoration(
+      color: const Color(0xFF1B5E37) /* Green1-500 */,
+      shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(16.r),
+      )),
 
-    child: GestureDetector(
-
-
-        onTap: onPressed,
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyles.bold16.copyWith(color: Colors.white),
-          ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyles.bold16.copyWith(color: Colors.white),
         ),
-
+      ),
       ),
     );
   }

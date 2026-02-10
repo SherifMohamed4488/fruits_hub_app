@@ -5,7 +5,8 @@ import 'package:fruits_hub/Features/Home/presentation/views/widgets/fruit_item.d
 import 'package:fruits_hub/Features/Home/presentation/views/widgets/get_dummy_product.dart';
 
 class BestSellingFullGridView extends StatelessWidget {
-  const BestSellingFullGridView({super.key});
+   BestSellingFullGridView({required this .products});
+  List<ProductEntity> products;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,9 @@ class BestSellingFullGridView extends StatelessWidget {
       scrollDirection:Axis.vertical,
         physics: BouncingScrollPhysics(),
         padding: EdgeInsets.zero,
-        itemCount: 10,
+        itemCount: products.length,
         itemBuilder: (context, index) {
-          return SizedBox();
+          return FruitItem(productEntity: products[index]);
             // FruitItem(productEntity: ,\);
         },
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

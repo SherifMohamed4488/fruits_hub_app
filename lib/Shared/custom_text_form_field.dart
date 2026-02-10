@@ -5,7 +5,7 @@ import '../Core/constants/textStyles.dart';
 
 class CustomTextFormField extends StatelessWidget {
    CustomTextFormField({required this.hintText , required this.textInputType ,
-     this.suffixIcon , this.onSaved , this.isObsecure=false });
+     this.suffixIcon , this.onSaved , this.isObsecure=false  , });
 
   String hintText;
   TextInputType textInputType;
@@ -13,11 +13,10 @@ class CustomTextFormField extends StatelessWidget {
   void Function(String?)? onSaved;
    bool isObsecure;
 
-
   @override
   Widget build(BuildContext context) {
     return  TextFormField(
-
+      style: TextStyles.regular14,
       obscureText: isObsecure,
       onSaved: onSaved,
       validator: (value){

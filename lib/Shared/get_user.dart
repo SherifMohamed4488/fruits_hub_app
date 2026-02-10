@@ -15,6 +15,18 @@ import 'package:fruits_hub/Features/auth/domain/entities/user_entity.dart';
 
 
 
+Stream<UserEntity?> getUser2() async* {
+  final jsonString = await Prefs.getString(kUserData);
+  if (jsonString == null || jsonString.isEmpty) {
+    yield null;
+    return; // stop here
+ }
+ yield UserModel.fromJson(jsonDecode(jsonString));
+
+}
+
+
+
 Future<UserEntity?> getUser() async {
   final jsonString = await Prefs.getString(kUserData);
 
@@ -24,5 +36,3 @@ Future<UserEntity?> getUser() async {
 
   return UserModel.fromJson(jsonDecode(jsonString));
 }
-
-

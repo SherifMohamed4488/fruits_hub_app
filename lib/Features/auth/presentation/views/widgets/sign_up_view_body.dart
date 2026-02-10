@@ -91,14 +91,14 @@ class _SignUpBlocConsumerState extends State<SignUpBlocConsumer> {
                         name = value!;
                       },
                         hintText: "الاسم كامل", textInputType: TextInputType.name),
-                    Gap(20.h),
+                    Gap(16.h),
 
                     CustomTextFormField(
                         onSaved: (value){
                           email = value!;
                         },
                         hintText: "البريد الإلكتروني", textInputType: TextInputType.emailAddress),
-                    Gap(20.h),
+                    Gap(16.h),
                     CustomTextFormField(
                       isObsecure: isObsecure,
                       onSaved: (value){

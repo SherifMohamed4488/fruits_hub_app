@@ -50,7 +50,7 @@ class ProductModel{
       desc: json["desc"] ?? '',
       isFeatured: json["isFeatured"] ?? false,
       imageUrl: json["imageUrl"],
-      expirartionMounths: json["expirationMounths"] ?? 0,
+      expirartionMounths: json["expirartionMounths"] ?? 0,
       numberOfCalories: json["numberOfCalories"] ?? 0,
       unitAmount: json["unitAmount"] ?? 0,
       isOrganic: json["isOrganic"] ?? false,
@@ -64,6 +64,7 @@ class ProductModel{
   ProductEntity toEntity(){
 
     return ProductEntity(
+      imageUrl: imageUrl,
       productName: productName,
         promoCode: promoCode,
         price: price,
@@ -73,6 +74,7 @@ class ProductModel{
         numberOfCalories: numberOfCalories,
         unitAmount: unitAmount,
       reviews: reviews.map((e) => e.toEntity()).toList(),
+      isOrganic: isOrganic
 
 
     );

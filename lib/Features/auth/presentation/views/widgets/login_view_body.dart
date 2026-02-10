@@ -28,15 +28,12 @@ class LoginViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context ) => LogInCubit(getIt.get<AuthRepo>()),
-      child: Scaffold(
-        appBar: CustomAppBar(
-          text: 'تسجيل دخول',
-        ),
-
-        body: LoginViewBodyBlocConsumer()
+    return Scaffold(
+      appBar: CustomAppBar(
+        text: 'تسجيل دخول',
       ),
+
+      body: LoginViewBodyBlocConsumer()
     );
 
   }
@@ -67,7 +64,7 @@ class _LoginViewBodyBlocConsumerState extends State<LoginViewBodyBlocConsumer> {
 
         if (state is LogInSuccess) {
           errorAndSuccessSnackBar(context, " successs log in" , Colors.green);
-          Navigator.pushNamed(context, HomeView.routeName);
+          Navigator.pushReplacementNamed(context, HomeView.routeName);
         }
         if (state is LogInFailure) {
           errorAndSuccessSnackBar(context, state.message , Colors.red);
@@ -78,113 +75,119 @@ class _LoginViewBodyBlocConsumerState extends State<LoginViewBodyBlocConsumer> {
 
        return ModalProgressHUD(
          inAsyncCall: state is LogInLoading ? true : false,
-         child: SingleChildScrollView(
+         child: GestureDetector(
+           behavior: HitTestBehavior.translucent, // 👈 هذا هو المفتاح
+           onTap: (){
+             FocusScope.of(context).unfocus();
+           },
+           child: SingleChildScrollView(
 
-            child: Padding(
-              padding:  EdgeInsets.all(16.sp),
-              child: Form(
-                key: formKey,
-                autovalidateMode: autoVlidateMode,
-                child: Column(
+              child: Padding(
+                padding:  EdgeInsets.all(16.r),
+                child: Form(
+                  key: formKey,
+                  autovalidateMode: autoVlidateMode,
+                  child: Column(
 
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTextFormField(
-                        onSaved: (value){
-                          email = value!;
-                        },
-                        hintText: "البريد الإلكتروني",
-                        textInputType: TextInputType.emailAddress
-                    ),
-                    Gap(20.h),
-                    CustomTextFormField(
-                      isObsecure: isObsecure,
-                      onSaved: (value){
-                        password = value!;
-                      },
-                      hintText: "كلمة المرور",
-                      textInputType: TextInputType.visiblePassword,
-                      suffixIcon: GestureDetector(
-                          onTap: (){
-                            setState(() => isObsecure = ! isObsecure);
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextFormField(
+                          onSaved: (value){
+                            email = value!;
                           },
-                          child: isObsecure ?  Icon(CupertinoIcons.eye_slash_fill , color: Color(0xffC9CECF),) :Icon(CupertinoIcons.eye_fill , color: Color(0xffC9CECF),)),
-
-                    ),
-
-
-                    Gap(16.h),
-                    Text(
-                        'نسيت كلمة المرور؟',
-                        style: TextStyles.bold13.copyWith(height: 1.70 , color: AppColors.LightPrimaryColor)
-                    ),
-
-                    Gap(33.h),
-
-                    CustomButton(onPressed: (){
-
-                      if(formKey.currentState!.validate()){
-
-                        formKey.currentState!.save();
-
-                          context.read<LogInCubit>().logInWithEmailAndPassword(email, password);
-
-                      }else{
-                        setState(() {
-                          autoVlidateMode = AutovalidateMode.always;
-                        });
-                      }
-                    }, text: 'تسجيل دخول'
-                    ),
-                    Gap(33.h),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-
-                        Text("ليس لديك حساب؟ " , style: TextStyles.semiBold16.copyWith(height: 1.40 , color: const Color(0xFF616A6B)),),
-                        GestureDetector(
+                          hintText: "البريد الإلكتروني",
+                          textInputType: TextInputType.emailAddress
+                      ),
+                      Gap(16.h),
+                      CustomTextFormField(
+                        isObsecure: isObsecure,
+                        onSaved: (value){
+                          password = value!;
+                        },
+                        hintText: "كلمة المرور",
+                        textInputType: TextInputType.visiblePassword,
+                        suffixIcon: GestureDetector(
                             onTap: (){
-                              Navigator.pushNamed(context, SignUpView.routeName);
+                              setState(() => isObsecure = ! isObsecure);
                             },
-                            child: Text("قم بانشاء حساب", style:TextStyles.semiBold16.copyWith(height: 1.40 , color: const Color(0xFF1B5E37))))
-                      ],),
-                    Gap(33.h),
+                            child: isObsecure ?  Icon(CupertinoIcons.eye_slash_fill , color: Color(0xffC9CECF),) :Icon(CupertinoIcons.eye_fill , color: Color(0xffC9CECF),)),
 
-                    OrWidget(),
+                      ),
 
 
+                      Gap(16.h),
+                      Text(
+                          'نسيت كلمة المرور؟',
+                          style: TextStyles.bold12.copyWith(height: 1.70 , color: AppColors.LightPrimaryColor)
+                      ),
 
-                    Gap(16.h),
-                    SocialLogInButton( onTap: (){
+                      Gap(33.h),
 
-                      context.read<LogInCubit>().logInWithGoogle();
+                      CustomButton(onPressed: (){
 
-                    }, image: Assets.images.googleLogo.path, text: 'تسجيل بواسطة جوجل'),
-                    Gap(16.h),
+                        if(formKey.currentState!.validate()){
 
-                    Platform.isIOS ?
-                    Column(
-                      children: [
-                        SocialLogInButton(onTap: (){}
-                            ,image: Assets.images.appleLogo.path, text:' تسجيل بواسطة أبل'),
-                        Gap(16.h),
-                      ],
-                    ) : SizedBox(),
+                          formKey.currentState!.save();
+
+                            context.read<LogInCubit>().logInWithEmailAndPassword(email, password);
+
+                        }else{
+                          setState(() {
+                            autoVlidateMode = AutovalidateMode.always;
+                          });
+                        }
+                      }, text: 'تسجيل دخول'
+                      ),
+                      Gap(33.h),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          Text("ليس لديك حساب؟ " , style: TextStyles.semiBold14.copyWith(height: 1.40 , color: const Color(0xFF616A6B)),),
+                          GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, SignUpView.routeName);
+                              },
+                              child: Text("قم بانشاء حساب", style:TextStyles.semiBold14.copyWith(height: 1.40 , color: const Color(0xFF1B5E37))))
+                        ],),
+                      Gap(33.h),
+
+                      OrWidget(),
 
 
-                    SocialLogInButton(onTap: (){
 
-                      context.read<LogInCubit>().logInWithFacebook();
+                      Gap(16.h),
+                      SocialLogInButton( onTap: (){
 
-                    } , image: Assets.images.facebookLogo.path, text:" تسجيل بواسطة فيسبوك"),
+                        context.read<LogInCubit>().logInWithGoogle();
 
-                  ],
+                      }, image: Assets.images.googleLogo.path, text: 'تسجيل بواسطة جوجل'),
+                      Gap(16.h),
 
+                      Platform.isIOS ?
+                      Column(
+                        children: [
+                          SocialLogInButton(onTap: (){}
+                              ,image: Assets.images.appleLogo.path, text:' تسجيل بواسطة أبل'),
+                          Gap(16.h),
+                        ],
+                      ) : SizedBox(),
+
+
+                      SocialLogInButton(onTap: (){
+
+                        context.read<LogInCubit>().logInWithFacebook();
+
+                      } , image: Assets.images.facebookLogo.path, text:" تسجيل بواسطة فيسبوك"),
+
+                    ],
+
+                  ),
                 ),
               ),
             ),
-          ),
+         ),
        );
       }
 

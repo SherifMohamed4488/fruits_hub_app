@@ -32,6 +32,6 @@ class ProductsGridViewBlocBuilder extends StatelessWidget {
           }
         }
 
-    );;
+    );
   }
 }

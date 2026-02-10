@@ -48,6 +48,7 @@ class ProductRepoImpl extends ProductRepo{
       if (data is!List) {
         return left(ServerFailure(message: "Invalid data format"));
       }
+      print("🟢 Raw Firestore data: $data"); // 🔹 ADD THIS
 
       List<ProductEntity> products = data
           .map((e) => ProductModel.fromJson(e).toEntity())

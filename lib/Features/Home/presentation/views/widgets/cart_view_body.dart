@@ -30,11 +30,7 @@ class CartViewBody extends StatelessWidget  {
 
         children: [
 
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 16.w),
-            child: InternalCustomAppBar(text: "السلة", arrowVisible: true , showNotification: false,),
-          ),
-          Gap(16.h),
+
           NumberOfCartProductsWidget(),
           Gap(24.h),
           // Customdivider(),

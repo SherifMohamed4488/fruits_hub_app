@@ -12,6 +12,10 @@ abstract class AuthRepo{
   Future addUserData({required UserEntity user});
   Future<UserEntity>getUserData({required String uid});
   Future saveUserData({required UserEntity usr});
+  Future<void> changePassword({required String oldPassword, required String newPassword,}) ;
+  // Future updateUserName({required String name});
+Future<void> logout();
+
 
 
 }

@@ -1,7 +1,9 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits_hub/Features/auth/domain/repos/auth_repo.dart';
 
+import '../../../../../../Core/errors/failures.dart';
 import 'log_in_states.dart';
 
 class LogInCubit extends Cubit<LogInStates>{
@@ -36,4 +38,12 @@ class LogInCubit extends Cubit<LogInStates>{
     result.fold((failure) => emit(LogInFailure(message: failure.message)), (userEntity) => emit(LogInSuccess(userEntity: userEntity)));
 
   }
+
+  Future<void> logOut()async{
+
+    await authRepo.logout();
+  }
+
+
+
 }

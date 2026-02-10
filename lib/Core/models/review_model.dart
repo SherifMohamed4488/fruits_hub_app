@@ -29,7 +29,7 @@ String reviewDesc;
         image: json["image"],
         rating: json["rating"],
         date: json["date"],
-        reviewDesc: json["reviewDescription"]
+        reviewDesc: json["reviewDesc"]
     );
   }
 

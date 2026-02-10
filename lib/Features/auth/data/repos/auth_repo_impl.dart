@@ -30,7 +30,8 @@ class AuthRepoImpl extends AuthRepo {
   ////// create User With Email And Password
 
   @override
-  Future<Either<Failure, UserEntity>> createUserWithEmailAndPassword(String email, String password, String name,) async {
+  Future<Either<Failure, UserEntity>> createUserWithEmailAndPassword(
+      String email, String password, String name,) async {
     User? user;
     try {
       user = await firebaseAuthService.createUserEmailAndPassword(
@@ -51,7 +52,8 @@ class AuthRepoImpl extends AuthRepo {
       await deleteUser(user);
 
       log(
-        "Exception in AuthRepoImpl.create user with email password : ${e.toString()} ",
+        "Exception in AuthRepoImpl.create user with email password : ${e
+            .toString()} ",
       );
       return left(ServerFailure(message: e.toString()));
     }
@@ -66,10 +68,8 @@ class AuthRepoImpl extends AuthRepo {
   ////// log in with Email And Password
 
   @override
-  Future<Either<Failure, UserEntity>> logInWithEmailAndPassword(
-    String email,
-    String password,
-  ) async {
+  Future<Either<Failure, UserEntity>> logInWithEmailAndPassword(String email,
+      String password,) async {
     try {
       var user = await firebaseAuthService.signInUserWithEmailAndPassword(
         email: email,
@@ -87,7 +87,8 @@ class AuthRepoImpl extends AuthRepo {
       return left(ServerFailure(message: e.toString()));
     } catch (e) {
       log(
-        "Exception in AuthRepoImpl.sign in user with email password : ${e.toString()} ",
+        "Exception in AuthRepoImpl.sign in user with email password : ${e
+            .toString()} ",
       );
       return left(ServerFailure(message: e.toString()));
     }
@@ -113,6 +114,7 @@ class AuthRepoImpl extends AuthRepo {
       } else {
         await addUserData(user: userEntity);
       }
+      await saveUserData(usr: userEntity);
 
       return right(userEntity);
     } catch (e) {
@@ -143,13 +145,15 @@ class AuthRepoImpl extends AuthRepo {
       } else {
         await addUserData(user: userEntity);
       }
+      await saveUserData(usr: userEntity);
 
       return right(UserModel.fromFirebaseUser(user));
     } catch (e) {
       await deleteUser(user);
 
       log(
-        "Exception in AuthRepoImpl.sign in user with facebook: ${e.toString()} ",
+        "Exception in AuthRepoImpl.sign in user with facebook: ${e
+            .toString()} ",
       );
       return left(ServerFailure(message: e.toString()));
     }
@@ -172,6 +176,7 @@ class AuthRepoImpl extends AuthRepo {
       data: UserModel.fromEntity(user).toMap(),
     );
   }
+
   //
   // Future <UserEntity> getUserData({required String uid} )async{
   //
@@ -223,4 +228,49 @@ class AuthRepoImpl extends AuthRepo {
 
     return await Prefs.setString(kUserData, jsonData);
   }
+
+  @override
+  Future<void> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user == null) {
+        throw FirebaseAuthException(
+          code: "user-not-found",
+          message: "No user is currently signed in.",
+        );
+      }
+
+      // إنشاء credential بالباسورد القديمة
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: oldPassword,
+      );
+
+      // إعادة التحقق من اليوزر
+      await user.reauthenticateWithCredential(credential);
+
+      // تغيير الباسورد
+      await user.updatePassword(newPassword);
+
+    } on FirebaseAuthException catch (e) {
+      // throw instead of just creating the object
+      throw ServerFailure(message: e.message ?? "Password change failed");
+    }
+  }
+
+  Future<void> logout() async { await FirebaseAuth.instance.signOut(); }
+
 }
+
+//   @override
+// Future updateUserName({required String name}) {
+//   // TODO: implement updateUserName
+//   throw UnimplementedError();
+// }
+
+
+

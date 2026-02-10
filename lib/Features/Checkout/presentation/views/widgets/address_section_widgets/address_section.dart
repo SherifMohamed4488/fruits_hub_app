@@ -20,60 +20,66 @@ GlobalKey <FormState> formKey;
        Form(
         key: formKey,
         autovalidateMode: value,
-        child: Column(
+        child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
-            CustomTextFormField(
-                hintText: "الاسم كامل",
-                textInputType: TextInputType.name,
-              onSaved: (value){
+            Column(
+              children: [
+                CustomTextFormField(
+                  hintText: "الاسم كامل",
+                  textInputType: TextInputType.name,
+                  onSaved: (value){
 
-                  context.read<OrderEntity>().shippingAddressEntity!.name = value;
-              },
+                    context.read<OrderEntity>().shippingAddressEntity!.name = value;
+                  },
+                ),
+                Gap(8.h),
+                CustomTextFormField(
+                    onSaved: (value){
+
+                      context.read<OrderEntity>().shippingAddressEntity!.email = value;
+                    },
+                    hintText: "البريد الإلكتروني",
+                    textInputType: TextInputType.emailAddress),
+                Gap(8.h),
+
+                CustomTextFormField(
+                    onSaved: (value){
+
+                      context.read<OrderEntity>().shippingAddressEntity!.city = value;
+                    },
+                    hintText: "المدينه", textInputType: TextInputType.text),
+                Gap(8.h),
+
+
+                CustomTextFormField(
+                    onSaved: (value){
+
+                      context.read<OrderEntity>().shippingAddressEntity!.address = value;
+                    },
+                    hintText: "العنوان", textInputType: TextInputType.text),
+                Gap(8.h),
+
+                CustomTextFormField(
+                    onSaved: (value){
+
+                      context.read<OrderEntity>().shippingAddressEntity!.floor = value;
+                    },
+                    hintText: "رقم الطابق , رقم الشقه ..", textInputType: TextInputType.text),
+                Gap(8.h),
+                CustomTextFormField(
+                    onSaved: (value){
+
+                      context.read<OrderEntity>().shippingAddressEntity!.phone = value;
+                    },
+                    hintText: "رقم الهاتف", textInputType: TextInputType.text),
+                Gap(16.h),
+                // CustomTextFormField(hintText: "الاسم كامل", textInputType: TextInputType.emailAddress),
+
+              ],
             ),
-            Gap(8.h),
-            CustomTextFormField(
-                onSaved: (value){
+          ]
 
-                  context.read<OrderEntity>().shippingAddressEntity!.email = value;
-                },
-                hintText: "البريد الإلكتروني",
-                textInputType: TextInputType.emailAddress),
-            Gap(8.h),
-
-            CustomTextFormField(
-                onSaved: (value){
-
-                  context.read<OrderEntity>().shippingAddressEntity!.city = value;
-                },
-                hintText: "المدينه", textInputType: TextInputType.text),
-            Gap(8.h),
-
-
-            CustomTextFormField(
-                onSaved: (value){
-
-                  context.read<OrderEntity>().shippingAddressEntity!.address = value;
-                },
-                hintText: "العنوان", textInputType: TextInputType.text),
-            Gap(8.h),
-
-            CustomTextFormField(
-                onSaved: (value){
-
-                  context.read<OrderEntity>().shippingAddressEntity!.floor = value;
-                },
-                hintText: "رقم الطابق , رقم الشقه ..", textInputType: TextInputType.text),
-            Gap(8.h),
-            CustomTextFormField(
-                onSaved: (value){
-
-                  context.read<OrderEntity>().shippingAddressEntity!.phone = value;
-                },
-                hintText: "رقم الهاتف", textInputType: TextInputType.text),
-            Gap(16.h),
-            // CustomTextFormField(hintText: "الاسم كامل", textInputType: TextInputType.emailAddress),
-
-          ],
         ),
       ),
     );

@@ -44,8 +44,11 @@ class CartItemMinusAddButtons extends StatelessWidget {
 
         GestureDetector(
           onTap: (){
-            cartItemEntity.decreaseQuantity();
-            context.read<CartMinusAddCubit>().updateCartItem(cartItemEntity);
+            if(cartItemEntity.quantity > 1){
+              cartItemEntity.decreaseQuantity();
+              context.read<CartMinusAddCubit>().updateCartItem(cartItemEntity);
+            }
+
 
           },
           child: Container(

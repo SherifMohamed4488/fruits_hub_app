@@ -12,24 +12,27 @@ class ProductsGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: GridView.builder(
+      child: Padding(
+        padding:  EdgeInsets.only(bottom: 16.h),
+        child: GridView.builder(
 
-        scrollDirection:Axis.vertical,
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          return FruitItem(productEntity: getDummyOneProduct());
-          // FruitItem(productEntity: ,);
-        },
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.77,
-            crossAxisSpacing: 10.w,
-            mainAxisSpacing: 10.h
+          scrollDirection:Axis.vertical,
+          physics: BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
+          itemCount: products.length,
+          itemBuilder: (context, index) {
+            return FruitItem(productEntity: products[index]);
+            // FruitItem(productEntity: ,);
+          },
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.77,
+              crossAxisSpacing: 10.w,
+              mainAxisSpacing: 10.h
+
+          ),
 
         ),
-
       ),
     );;
   }

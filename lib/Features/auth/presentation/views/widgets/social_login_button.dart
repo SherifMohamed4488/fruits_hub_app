@@ -34,13 +34,11 @@ VoidCallback onTap ;
             child: Row(
             children: [
               Gap(20.w),
-              SvgPicture.asset(image,),
-      Spacer(),
-              Padding(
-                padding:  EdgeInsets.only(left: 106.w),
-                child: Text(text, style: TextStyles.semiBold16.copyWith(height: 1.40 ,  color: const Color(0xFF0C0D0D) ),
-                ),
-              )
+              SvgPicture.asset(image,height: 20.h, width: 20.w,),
+      Spacer(flex: 1,),
+              Text(text, style: TextStyles.semiBold16.copyWith(height: 1.40 ,  color: const Color(0xFF0C0D0D) ),
+              ),
+              Spacer(flex: 2,)
                   ],
                 ),
           ),

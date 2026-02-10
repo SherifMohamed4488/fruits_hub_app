@@ -70,7 +70,9 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
             CustomButton(
 
                 onPressed: () {
-              Navigator.of(context).pushReplacementNamed(LoginView.routeName);
+                  Prefs.setBool(kIsBoardingViewSeen, true);
+
+                  Navigator.of(context).pushReplacementNamed(LoginView.routeName);
 
             }, text: 'ابدأ الان'),
           ),

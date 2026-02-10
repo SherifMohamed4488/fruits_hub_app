@@ -76,7 +76,7 @@ void dispose() {
       padding:  EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
         children: [
-          InternalCustomAppBar(text: "الشحن", arrowVisible: true , showNotification: false,),
+          // InternalCustomAppBar(text: "الشحن", arrowVisible: true , showNotification: false,),
           Gap(20.h),
           CheckoutStepsListView(
             currentPageIndex: currentPageIndex,
@@ -104,6 +104,7 @@ void dispose() {
           CheckoutStepsPageView(pageController: pageController, formKey: _formKey, valueListenabl: valueNotifier,),
           Gap(100.h),
           CustomButton(onPressed: (){
+            FocusScope.of(context).unfocus();
            if(currentPageIndex == 0) {
               _handleShippingSectionValidation(context);
 
@@ -116,7 +117,9 @@ void dispose() {
              _processPayment(context);
            }
 
-          }, text: getNextButtonText[currentPageIndex])
+          }, text: getNextButtonText[currentPageIndex]
+          ),
+          Gap(16.h),
         ],
       ),
     );

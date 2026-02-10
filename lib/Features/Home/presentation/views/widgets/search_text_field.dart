@@ -6,8 +6,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../../Core/constants/textStyles.dart';
 
 class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key});
+   SearchTextField({super.key ,  this.onChanged , this.controller});
 
+  Function(String)? onChanged;
+  TextEditingController? controller ;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +27,9 @@ class SearchTextField extends StatelessWidget {
       ),
 
       child: TextField(
-
-
+        controller: controller,
+style: TextStyles.regular14,
+onChanged: onChanged,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
 

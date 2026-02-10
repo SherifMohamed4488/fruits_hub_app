@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fruits_hub/Core/repos/order_repo/order_repo.dart';
 import 'package:fruits_hub/Features/Checkout/domain/order_entity.dart';
 import 'package:fruits_hub/Features/Checkout/presentation/view_model/add_order_cubit/add_order_cubit.dart';
@@ -10,6 +12,7 @@ import 'package:fruits_hub/Features/auth/domain/entities/user_entity.dart';
 import 'package:fruits_hub/Shared/get_user.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../Core/constants/textStyles.dart';
 import '../../../../Core/services/get_it_service.dart';
 import '../../../Home/domain/entities/cart_item_entity.dart';
 
@@ -47,6 +50,7 @@ class CheckoutView extends StatefulWidget {
 class _CheckoutViewState extends State<CheckoutView> {
 
 
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<UserEntity?>(
@@ -63,14 +67,51 @@ class _CheckoutViewState extends State<CheckoutView> {
 
         return BlocProvider(
           create: (context) => AddOrderCubit(getIt<OrderRepo>()),
-          child: Scaffold(
-            body: SafeArea(
-              child: Provider.value(
-                value: OrderEntity(
-                  cartEntity: widget.cartEntity,
-                  uID: uId,   // <-- هنا لازم String
+          child: GestureDetector(
+            behavior: HitTestBehavior.translucent, // 👈 هذا هو المفتاح
+            onTap: (){
+              FocusScope.of(context).unfocus();
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                centerTitle: true,
+                title: Text(
+                    "الشحن",
+                    // textAlign: TextAlign.center,
+                    style: TextStyles.bold19.copyWith(color: const Color(0xFF0C0D0D))
                 ),
-                child: AddOrderCubitBlocBuilder(widget: CheckoutViewBody()),
+                // leading: Padding(
+                //   padding:  EdgeInsets.only(right: 16.w),
+                //   child: GestureDetector(
+                //     onTap: (){
+                //       Navigator.pop(context);
+                //     },
+                //     child: Container(
+                //       width: 44.w,
+                //       height: 44.h,
+                //       decoration: ShapeDecoration(
+                //         color: Colors.white,
+                //         shape: OvalBorder(
+                //           side: BorderSide(
+                //             width: 1,
+                //             color: const Color(0xFFF1F1F5),
+                //           ),
+                //         ),
+                //       ),
+                //       child: Center(child: SvgPicture.asset("assets/images/arrow_back_icon.svg" , height: 22.h , width: 22.w,)),
+                //     ),
+                //   ),
+                // ),
+              ),
+              body: SafeArea(
+                child: Provider.value(
+                  value: OrderEntity(
+                    cartEntity: widget.cartEntity,
+                    uID: uId,   // <-- هنا لازم String
+                  ),
+                  child: AddOrderCubitBlocBuilder(widget: CheckoutViewBody()),
+                ),
               ),
             ),
           ),

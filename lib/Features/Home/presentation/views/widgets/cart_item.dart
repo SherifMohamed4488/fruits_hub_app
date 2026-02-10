@@ -31,10 +31,13 @@ CartItemEntity cartItemEntity;
         return Row(
           children: [
             Container(
-              width: 73.w,
+              width: 72.w,
               height: 92.h,
               decoration: BoxDecoration(color: const Color(0xFFF3F5F7)),
-              child: Image.network(cartItemEntity.productEntity.imageUrl?? "https://th.bing.com/th/id/OIP.nRRnjzUxCAAN9Kz4XnLugQHaFj?w=271&h=203&c=7&r=0&o=7&pid=1.7&rm=3") ,
+              child: Padding(
+                padding:  EdgeInsets.all(8.0.sp),
+                child: Image.network(cartItemEntity.productEntity.imageUrl?? "https://th.bing.com/th/id/OIP.nRRnjzUxCAAN9Kz4XnLugQHaFj?w=271&h=203&c=7&r=0&o=7&pid=1.7&rm=3"),
+              ) ,
               // Image.asset("assets/images/wtaermelon2_icon.png")
 
             ),
@@ -49,7 +52,7 @@ CartItemEntity cartItemEntity;
                 ),
                 Gap(6.h),
                 Text(
-                    '${cartItemEntity.calculateTotalWeight()} كم',
+                    '${cartItemEntity.quantity}ك',
                     textAlign: TextAlign.right,
                     style: TextStyles.bold13.copyWith(color: const Color(0xFFF4A91F) , height: 1.60)
                 ),
